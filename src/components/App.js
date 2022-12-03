@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchOdds } from "../API/fetchOdds";
 import { sportsList } from "../constants";
+import { SportsCard } from "./SportsCard";
 
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -65,9 +66,10 @@ function App() {
                       md={4}
                       className="mb-3 sports-grid-container"
                     >
-                      <div>
+                      {/* <div>
                         {sportsGame.home_team} vs {sportsGame.away_team}
-                      </div>
+                      </div> */}
+                      <SportsCard sportsGame={sportsGame} />
                     </Col>
                   );
                 })
