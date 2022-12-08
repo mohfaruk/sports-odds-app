@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchOdds } from "../API/fetchOdds";
 import { sportsList } from "../constants";
 import { SportsCard } from "./SportsCard";
+import { OddsModal } from "./OddsModal";
 
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -13,6 +14,8 @@ import "../stylesheets/App.scss";
 function App() {
   const [odds, setOdds] = useState(null);
   const [activeSport, setActiveSport] = useState("soccer_epl");
+  const [activeGame, setActiveGame] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const getOdds = async () => {
@@ -33,6 +36,11 @@ function App() {
   if (!odds) {
     return null;
   }
+
+  const showOdds = game => {
+    setActiveGame(game);
+    setShowModal(true);
+  };
 
   console.log(odds, "::odds");
   return (
@@ -69,7 +77,7 @@ function App() {
                       {/* <div>
                         {sportsGame.home_team} vs {sportsGame.away_team}
                       </div> */}
-                      <SportsCard sportsGame={sportsGame} />
+                      <SportsCard sportsGame={sportsGame} showOdds={showOdds} />
                     </Col>
                   );
                 })
@@ -82,6 +90,11 @@ function App() {
           </Col>
         </Row>
       </Container>
+      <OddsModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        activeGame={activeGame}
+      />
     </>
   );
 }

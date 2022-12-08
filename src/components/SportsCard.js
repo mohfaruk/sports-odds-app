@@ -8,7 +8,7 @@ import { getDate, filterTeam } from "../utils";
 import "../stylesheets/SportsCard.scss";
 
 export function SportsCard(props) {
-  const { sportsGame } = props;
+  const { sportsGame, showOdds } = props;
 
   const homeTeam = sportsGame.home_team;
   const awayTeam = sportsGame.away_team;
@@ -42,6 +42,15 @@ export function SportsCard(props) {
               rounded
             />
             {awayTeam}: {sportsGame.bookmakers[0].markets[0].outcomes[1].price}
+          </Card.Text>
+          <Card.Text>
+            <Button
+              className="sports-card__see-more-odds"
+              variant="link"
+              onClick={() => showOdds(sportsGame)}
+            >
+              Check out more odds
+            </Button>
           </Card.Text>
         </Row>
       </Card.Body>
