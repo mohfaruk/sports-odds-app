@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-// import Table from "react-bootstrap/Table";
+import Table from "react-bootstrap/Table";
 import Image from "react-bootstrap/Image";
 import { footballIcons } from "../constants";
 import { filterTeam, calculateOdds } from "../utils";
@@ -44,12 +44,34 @@ export function OddsModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>Sports Odds</th>
+              <th>{homeTeam}</th>
+              <th>Draw</th>
+              <th>{awayTeam}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {activeGame.bookmakers.map(bookmaker => {
+              return (
+                <tr key={bookmaker.key}>
+                  <td>{bookmaker.title}</td>
+                  <td>
+                    {calculateOdds(bookmaker.markets[0].outcomes[0].price)}
+                  </td>
+                  <td>
+                    {calculateOdds(bookmaker.markets[0].outcomes[2].price)}
+                  </td>
+                  <td>
+                    {calculateOdds(bookmaker.markets[0].outcomes[1].price)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

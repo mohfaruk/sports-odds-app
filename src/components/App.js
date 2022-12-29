@@ -5,6 +5,7 @@ import { SportsCard } from "./SportsCard";
 import { OddsModal } from "./OddsModal";
 
 import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
@@ -16,6 +17,7 @@ function App() {
   const [activeSport, setActiveSport] = useState("soccer_epl");
   const [activeGame, setActiveGame] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getOdds = async () => {
@@ -42,9 +44,14 @@ function App() {
     setShowModal(true);
   };
 
-  console.log(odds, "::odds");
+  console.log(odds, "::odds"); // logs odds
   return (
     <>
+      <Navbar bg="dark" variant="dark" className="mb-2">
+        <Container>
+          <Navbar.Brand>Sports Bets List</Navbar.Brand>
+        </Container>
+      </Navbar>
       <Container>
         <Row>
           <Col xs={12} md={2}>
@@ -64,29 +71,35 @@ function App() {
             </ListGroup>
           </Col>
           <Col xs={12} md={10}>
-            <Row>
-              {odds[activeSport] ? (
-                odds[activeSport].map(sportsGame => {
-                  return (
-                    <Col
-                      key={sportsGame.id}
-                      xs={12}
-                      md={4}
-                      className="mb-3 sports-grid-container"
-                    >
-                      {/* <div>
-                        {sportsGame.home_team} vs {sportsGame.away_team}
-                      </div> */}
-                      <SportsCard sportsGame={sportsGame} showOdds={showOdds} />
-                    </Col>
-                  );
-                })
-              ) : (
-                <div>
-                  Betting Odds For This Sport Is Not Available At This Time...
-                </div>
-              )}
-            </Row>
+            {error ? (
+              <h4>
+                Sports Odds Not Available At Present. Please Check Back Later.
+              </h4>
+            ) : (
+              <Row>
+                {odds[activeSport] ? (
+                  odds[activeSport].map(sportsGame => {
+                    return (
+                      <Col
+                        key={sportsGame.id}
+                        xs={12}
+                        md={4}
+                        className="mb-3 sports-grid-container"
+                      >
+                        <SportsCard
+                          sportsGame={sportsGame}
+                          showOdds={showOdds}
+                        />
+                      </Col>
+                    );
+                  })
+                ) : (
+                  <div>
+                    Betting Odds For This Sport Is Not Available At This Time...
+                  </div>
+                )}
+              </Row>
+            )}
           </Col>
         </Row>
       </Container>

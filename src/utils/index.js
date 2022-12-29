@@ -14,3 +14,12 @@ export const filterTeam = team => {
     .split(/\s+/) // get rids of blank
     .join("_"); // joins with underscore
 };
+
+// calculates to easy read odds
+export const calculateOdds = value => {
+  if (Math.sign(value) === 1) {
+    return `+${value}`;
+  }
+
+  return value;
+};

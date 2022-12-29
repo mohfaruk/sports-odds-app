@@ -13,7 +13,7 @@ const options = key => {
       dateFormat: "iso",
     },
     headers: {
-      "X-RapidAPI-Key": "77a9ffa732mshd0cdd33fc94ceb0p1e8b61jsn321cfb09b499",
+      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
       "X-RapidAPI-Host": "odds.p.rapidapi.com",
     },
   };
